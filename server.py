@@ -449,12 +449,30 @@ async def run_live_benchmark():
         "status": "SUPER SONIC SPEED (Sub-2ms)"
     }
 
-os.makedirs("static", exist_ok=True)
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# Smart Static Files Resolver (supports both static/ folder and root directory)
+def get_static_dir():
+    if os.path.exists("static/index.html"):
+        return "static"
+    return "."
+
+STATIC_DIR = get_static_dir()
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 @app.get("/")
 async def serve_index():
-    return FileResponse("static/index.html")
+    for candidate in ["static/index.html", "index.html"]:
+        if os.path.exists(candidate):
+            return FileResponse(candidate)
+    
+    # Helpful diagnostic if index.html is missing
+    return JSONResponse(
+        status_code=404,
+        content={
+            "error": "index.html not found",
+            "message": "Please ensure static/index.html or index.html is uploaded to your GitHub repository.",
+            "current_files": os.listdir(".")
+        }
+    )
 
 if __name__ == "__main__":
     import uvicorn
