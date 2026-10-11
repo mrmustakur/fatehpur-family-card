@@ -1,0 +1,235 @@
+{
+  "total_voters": 24581,
+  "male_voters": 12651,
+  "female_voters": 11930,
+  "male_ratio": 51.47,
+  "female_ratio": 48.53,
+  "total_families": 14720,
+  "single_member_families": 9172,
+  "multi_member_families": 5548,
+  "coupled_households": 1399,
+  "flagged_review_voters": 0,
+  "families_flagged_review": 0,
+  "avg_family_size": 1.67,
+  "ward_breakdown": [
+    {
+      "ward_no": "১",
+      "total": 1923,
+      "male": 1000,
+      "female": 923
+    },
+    {
+      "ward_no": "২",
+      "total": 2762,
+      "male": 1482,
+      "female": 1280
+    },
+    {
+      "ward_no": "৩",
+      "total": 2454,
+      "male": 1248,
+      "female": 1206
+    },
+    {
+      "ward_no": "৪",
+      "total": 3214,
+      "male": 1669,
+      "female": 1545
+    },
+    {
+      "ward_no": "৫",
+      "total": 2438,
+      "male": 1218,
+      "female": 1220
+    },
+    {
+      "ward_no": "৬",
+      "total": 1802,
+      "male": 880,
+      "female": 922
+    },
+    {
+      "ward_no": "৭",
+      "total": 3555,
+      "male": 1825,
+      "female": 1730
+    },
+    {
+      "ward_no": "৮",
+      "total": 3594,
+      "male": 1860,
+      "female": 1734
+    },
+    {
+      "ward_no": "৯",
+      "total": 2839,
+      "male": 1469,
+      "female": 1370
+    }
+  ],
+  "top_occupations": [
+    {
+      "occupation": "গৃহিনী",
+      "count": 8736
+    },
+    {
+      "occupation": "কৃষক",
+      "count": 5691
+    },
+    {
+      "occupation": "ছাত্র/ছাত্রী",
+      "count": 3405
+    },
+    {
+      "occupation": "বেকার",
+      "count": 2486
+    },
+    {
+      "occupation": "ব্যবসা",
+      "count": 1264
+    },
+    {
+      "occupation": "শ্রীমিক",
+      "count": 1121
+    },
+    {
+      "occupation": "জেেল",
+      "count": 378
+    },
+    {
+      "occupation": "বেসরকারী চাকুরী",
+      "count": 304
+    },
+    {
+      "occupation": "দিনমজুর",
+      "count": 288
+    },
+    {
+      "occupation": "মিস্ত্রীী",
+      "count": 204
+    }
+  ],
+  "top_areas": [
+    {
+      "area": "বেতাঙ্গঞ্জা",
+      "count": 2957,
+      "ward": "৮",
+      "code": "০৯২৪"
+    },
+    {
+      "area": "গোবিন্দপুর",
+      "count": 1967,
+      "ward": "৭",
+      "code": "০৯২১"
+    },
+    {
+      "area": "মোহাম্মদপুর",
+      "count": 1619,
+      "ward": "২",
+      "code": "০৯০৬"
+    },
+    {
+      "area": "হামিদপুর",
+      "count": 1425,
+      "ward": "৫",
+      "code": "০৯১৭"
+    },
+    {
+      "area": "সাহাপুর",
+      "count": 1372,
+      "ward": "৪",
+      "code": "০৯১৩"
+    },
+    {
+      "area": "অন্তেহরি",
+      "count": 1326,
+      "ward": "১",
+      "code": "০৯০২"
+    },
+    {
+      "area": "জাহিদপুর",
+      "count": 1193,
+      "ward": "৩",
+      "code": "০৯০৯"
+    },
+    {
+      "area": "মুনিয়ার পার",
+      "count": 1100,
+      "ward": "৯",
+      "code": "০৯২৬"
+    },
+    {
+      "area": "ফতেপুর",
+      "count": 1095,
+      "ward": "৯",
+      "code": "০৯২৭"
+    },
+    {
+      "area": "পূর্ব বেড়কুড়ি",
+      "count": 1029,
+      "ward": "৪",
+      "code": "০৯১২"
+    },
+    {
+      "area": "চুয়াবালী",
+      "count": 902,
+      "ward": "৭",
+      "code": "০৯২২"
+    },
+    {
+      "area": "পশ্চিম বেড়কুড়ি",
+      "count": 813,
+      "ward": "৪",
+      "code": "০৯১১"
+    },
+    {
+      "area": "কাশিমপুর",
+      "count": 693,
+      "ward": "২",
+      "code": "০৯০৪"
+    },
+    {
+      "area": "বেড়িগঁাও",
+      "count": 686,
+      "ward": "৭",
+      "code": "০৯২৩"
+    },
+    {
+      "area": "সাদাপুর",
+      "count": 677,
+      "ward": "৬",
+      "code": "০৯২০"
+    }
+  ],
+  "upazila": "রাজনগর",
+  "district": "মৌলভীবাজার",
+  "union": "ফতেপুর",
+  "admins": [
+    {
+      "id": "adm_1",
+      "name": "মো: তানভীর আহমেদ",
+      "role": "উপজেলা নির্বাচন অফিসার (সুপার অ্যাডমিন)",
+      "badge": "Super Admin"
+    },
+    {
+      "id": "adm_2",
+      "name": "সুলতানা জাহান",
+      "role": "ডাটা ভেরিফিকেশন অফিসার",
+      "badge": "Verifier"
+    },
+    {
+      "id": "adm_3",
+      "name": "কাজী মোস্তাফিজুর রহমান",
+      "role": "ফ্যামিলি কার্ড ডিস্ট্রিবিউশন ইনচার্জ",
+      "badge": "Distribution"
+    },
+    {
+      "id": "adm_4",
+      "name": "আরিফুল হক চৌধুরী",
+      "role": "ফিল্ড মনিটরিং কো-অর্ডিনেটর",
+      "badge": "Field Ops"
+    }
+  ],
+  "ingestion_timestamp": "2026-10-12 01:16:48",
+  "latency_baseline_ms": 0.05
+}

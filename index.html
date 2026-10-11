@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Family Card & Voter Management Dashboard | নির্বাচন কমিশন</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+  <!-- Left Sidebar Navigation -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand-section">
+        <div class="brand-logo-text">
+          FamilyCard<span class="brand-dot"></span>
+        </div>
+      </div>
+
+      <div class="nav-group-title">মেন্যু</div>
+      <ul class="nav-links">
+        <li>
+          <a class="nav-link active" onclick="switchNavSection('dashboard')" id="nav-dashboard">
+            <span class="icon">🏠</span> Dashboard
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" onclick="switchNavSection('voters')" id="nav-voters">
+            <span class="icon">👥</span> Voters List
+            <span class="badge-count" id="sidebarVoterCount">২৪.৫K</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" onclick="switchNavSection('families')" id="nav-families">
+            <span class="icon">💳</span> Family Cards
+            <span class="badge-count" id="sidebarFamilyCount">১০.০K</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" onclick="switchNavSection('review')" id="nav-review">
+            <span class="icon">⚠️</span> Review Queue
+            <span class="badge-count" id="sidebarReviewCount" style="background: #fee2e2; color: #ef4444; font-weight: 700;">১,০৪৫</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" onclick="switchNavSection('analytics')" id="nav-analytics">
+            <span class="icon">📊</span> Analytics
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" onclick="openBenchmarkModal()" id="nav-benchmark">
+            <span class="icon">⚡</span> Benchmark
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <!-- Bottom Super Sonic Box -->
+      <div class="sidebar-promo-card">
+        <div class="promo-title">
+          <span>⚡</span> Multi-Tier Clustering
+        </div>
+        <p class="promo-desc">
+          Sibling anchor & spousal linking verified with 2.45 avg family size.
+        </p>
+        <button class="promo-btn" onclick="openBenchmarkModal()">
+          স্পিড টেস্ট চালান
+        </button>
+      </div>
+
+      <ul class="sidebar-bottom-links">
+        <li>
+          <a class="nav-link" onclick="toggleAdminModal(true)">
+            <span class="icon">⚙️</span> Settings & Admins
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" onclick="alert('সহায়তার জন্য উপজেলা নির্বাচন কর্মকর্তা, রাজনগর এর সাথে যোগাযোগ করুন।')">
+            <span class="icon">🎧</span> Help Center
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main Content Dashboard Area -->
+  <main class="main-content">
+    
+    <!-- Top Header Bar -->
+    <header class="top-header">
+      <div class="page-title-group">
+        <h1 id="pageTitleHeading">Dashboard</h1>
+        <p id="pageSubtitle">ফতেপুর ইউনিয়ন, রাজনগর, মৌলভীবাজার | বাংলাদেশ নির্বাচন কমিশন</p>
+      </div>
+
+      <div class="top-header-right">
+        <!-- Scope Pills -->
+        <div class="time-pills">
+          <button class="pill-btn active" onclick="filterByScope('all', this)">All</button>
+          <button class="pill-btn" onclick="filterByScope('ward_1_3', this)">W 1-3</button>
+          <button class="pill-btn" onclick="filterByScope('ward_4_6', this)">W 4-6</button>
+          <button class="pill-btn" onclick="filterByScope('ward_7_9', this)">W 7-9</button>
+        </div>
+
+        <!-- Date Range Pill -->
+        <div class="date-range-badge">
+          <span>📅</span> 1 Sep 2024 - 31 Sep 2024
+        </div>
+
+        <!-- Top Search Bar -->
+        <div class="top-search-wrapper">
+          <span class="top-search-icon">🔍</span>
+          <input 
+            type="text" 
+            id="globalSearchInput" 
+            placeholder="Search voters, spouses or families..."
+            autocomplete="off"
+          >
+        </div>
+
+        <!-- Notification Bell -->
+        <div class="icon-btn-round" title="বিজ্ঞপ্তি ও আপডেট" onclick="switchNavSection('review')">
+          <span>🔔</span>
+          <span class="notification-dot"></span>
+        </div>
+
+        <!-- Current Admin Avatar & Dropdown -->
+        <div class="top-admin-avatar" id="headerAdminAvatar" title="অ্যাডমিন পরিবর্তন করতে ক্লিক করুন" onclick="toggleAdminModal(true)">
+          TA
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION: MAIN DASHBOARD VIEW -->
+    <section id="viewDashboard">
+      
+      <!-- Top Row: 4 Metric Cards (1 Dark Hero + 3 Minimalist White) -->
+      <div class="kpi-grid">
+        <!-- 1. Dark Hero Card (Total Voters) -->
+        <div class="kpi-card kpi-card-dark">
+          <div class="kpi-label">Total Voters (সর্বমোট ভোটার)</div>
+          <div class="kpi-value" id="kpiTotalVoters">--</div>
+          <div class="kpi-trend trend-up">
+            <span>↗ 100%</span>
+            <span class="trend-subtle" style="color: #9ca3af; margin-left: 0.25rem;">from 54 PDFs</span>
+          </div>
+        </div>
+
+        <!-- 2. White Card (Total Families) -->
+        <div class="kpi-card">
+          <div class="kpi-label">Total Families (পরিবার / খানা)</div>
+          <div class="kpi-value" id="kpiTotalFamilies">--</div>
+          <div class="kpi-trend trend-up">
+            <span id="kpiCouplesCount">↗ 1,690</span>
+            <span class="trend-subtle" style="margin-left: 0.25rem;">coupled households</span>
+          </div>
+        </div>
+
+        <!-- 3. White Card (Average Family Size) -->
+        <div class="kpi-card">
+          <div class="kpi-label">Avg Family Size (গড় সদস্য)</div>
+          <div class="kpi-value" id="kpiAvgFamilySize">2.45</div>
+          <div class="kpi-trend trend-up">
+            <span>↗ 2,935</span>
+            <span class="trend-subtle" style="margin-left: 0.25rem;">multi-member</span>
+          </div>
+        </div>
+
+        <!-- 4. White Card (Needs Review Queue) -->
+        <div class="kpi-card" style="cursor: pointer;" onclick="switchNavSection('review')">
+          <div class="kpi-label" style="color: #ef4444; font-weight: 600;">Needs Review (রিভিউ কিউ)</div>
+          <div class="kpi-value" id="kpiNeedsReview" style="color: #b91c1c;">--</div>
+          <div class="kpi-trend" style="color: #ef4444;">
+            <span>⚠️ 1-Click Resolve</span>
+            <span class="trend-subtle" style="margin-left: 0.25rem;">for 4 admins</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle Row: Bar Chart (Left 2/3) + Calendar & Progress Widget (Right 1/3) -->
+      <div class="middle-grid">
+        <!-- Left: Ward Distribution Bar Chart -->
+        <div class="dashboard-card">
+          <div class="card-header-clean">
+            <h3>Ward Voter Distribution (ওয়ার্ডভিত্তিক ভোটার পরিসংখ্যান)</h3>
+            <button class="card-action-icon" title="অ্যানালিটিক্স বিস্তারিত" onclick="switchNavSection('analytics')">
+              ↗
+            </button>
+          </div>
+
+          <div class="chart-content-area">
+            <div class="y-axis-labels">
+              <div>10K</div>
+              <div>8K</div>
+              <div>4K</div>
+              <div>2K</div>
+              <div>0</div>
+            </div>
+
+            <div class="bar-columns-wrapper" id="wardBarsWrapper">
+              <!-- Dynamically populated bars Ward 1 to 9 -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Calendar Strip & Community Progress Widget -->
+        <div class="dashboard-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div class="card-header-clean" style="margin-bottom: 1rem;">
+              <div style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer;">‹</div>
+              <h3 style="font-size: 0.95rem; font-family: var(--font-sans);">September 2024</h3>
+              <div style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer;">›</div>
+            </div>
+
+            <div class="calendar-widget-strip">
+              <div class="cal-day-pill">
+                <span class="cal-weekday">Tue</span>
+                <span class="cal-num">17</span>
+              </div>
+              <div class="cal-day-pill">
+                <span class="cal-weekday">Wed</span>
+                <span class="cal-num">18</span>
+              </div>
+              <div class="cal-day-pill active">
+                <span class="cal-weekday">Thu</span>
+                <span class="cal-num">19</span>
+              </div>
+              <div class="cal-day-pill">
+                <span class="cal-weekday">Fri</span>
+                <span class="cal-num">20</span>
+              </div>
+              <div class="cal-day-pill">
+                <span class="cal-weekday">Sat</span>
+                <span class="cal-num">21</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="progress-growth-card">
+            <div class="growth-info-left">
+              <h4>Verified Household Rate</h4>
+              <p>↗ 95.7% auto-linked</p>
+            </div>
+            <div class="radial-progress-circle">
+              <span class="radial-label">96%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Clean Modern Data Table with Review Queue Toggle -->
+      <div class="table-dashboard-card">
+        <div class="table-dashboard-header">
+          <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <h3 id="tableTitle">Registered Voters (নিবন্ধিত ভোটার তালিকা)</h3>
+            <div class="table-filter-pills">
+              <button class="table-filter-pill-btn active" id="pillVotersMode" onclick="setTableMode('voters')">All Voters</button>
+              <button class="table-filter-pill-btn" id="pillFamiliesMode" onclick="setTableMode('families')">Families</button>
+              <button class="table-filter-pill-btn" id="pillReviewMode" onclick="setTableMode('review')" style="color: #b91c1c;">
+                ⚠️ Review Queue (<span id="pillReviewBadgeCount">0</span>)
+              </button>
+            </div>
+          </div>
+
+          <div class="table-tools-right">
+            <button class="card-action-icon" title="রিফ্রেশ" onclick="refreshCurrentTable()">🔄</button>
+            <button class="card-action-icon" title="পূর্ণাঙ্গ ভিউ" onclick="switchNavSection('voters')">↗</button>
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table class="modern-data-table">
+            <thead>
+              <tr id="tableHeaderCols">
+                <!-- Dynamically populated headers -->
+              </tr>
+            </thead>
+            <tbody id="tableBodyRows">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table Pagination Footer -->
+        <div style="padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-light); font-size: 0.82rem; color: var(--text-muted);">
+          <span id="tablePageStats">Showing 1 to 50 of 24,581</span>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <button class="pill-btn" style="background: #f1f4f9; padding: 0.35rem 0.85rem;" onclick="paginateTable(-1)">Previous</button>
+            <span id="tablePageNum" style="font-family: var(--font-sans); font-weight: 600; color: var(--text-main);">Page 1</span>
+            <button class="pill-btn" style="background: #f1f4f9; padding: 0.35rem 0.85rem;" onclick="paginateTable(1)">Next</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SECTION: ANALYTICS FULL VIEW -->
+    <section id="viewAnalytics" style="display: none;">
+      <div class="middle-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 1.5rem;">
+        <div class="dashboard-card">
+          <div class="card-header-clean">
+            <h3>শীর্ষ পেশাভিত্তিক পরিসংখ্যান</h3>
+          </div>
+          <div id="analyticsOccupationsList" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+        </div>
+
+        <div class="dashboard-card">
+          <div class="card-header-clean">
+            <h3>শীর্ষ ভোটার এলাকা ও গ্রামসমূহ</h3>
+          </div>
+          <div id="analyticsAreasList" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BANGLADESH NATIONAL FAMILY CARD SPECIMEN MODAL -->
+  <div class="modal-overlay" id="familyCardModal">
+    <div class="modal-window-clean">
+      <div class="modal-header-clean">
+        <h2 style="font-size: 1.15rem; font-weight: 700;">জাতীয় ফ্যামিলি কার্ড ও সদস্য তথ্য</h2>
+        <button class="modal-close-btn" onclick="closeFamilyCardModal()">&times;</button>
+      </div>
+
+      <!-- Bangladesh Official Green Card Specimen -->
+      <div class="family-card-specimen">
+        <div class="fc-header">
+          <div class="fc-title-group">
+            <h3>গণপ্রজাতন্ত্রী বাংলাদেশ সরকার | পরিবার কার্ড</h3>
+            <p>বাংলাদেশ নির্বাচন কমিশন অনুমোদিত ভোটার তালিকা পরিবার কার্ড তথ্য</p>
+          </div>
+          <div class="fc-id-badge" id="modalFamilyIdBadge">FAM-0000-0000</div>
+        </div>
+
+        <div class="fc-details-grid">
+          <div class="fc-detail-item">
+            <div class="label">গৃহপ্রধান (Family Head):</div>
+            <div class="val" id="modalGuardianName" style="color: #fef08a; font-size: 0.95rem;">--</div>
+          </div>
+          <div class="fc-detail-item">
+            <div class="label">ভোটার এলাকা:</div>
+            <div class="val" id="modalAreaName">--</div>
+          </div>
+          <div class="fc-detail-item">
+            <div class="label">ওয়ার্ড ও এলাকা কোড:</div>
+            <div class="val" id="modalWardCode">--</div>
+          </div>
+          <div class="fc-detail-item">
+            <div class="label">ঠিকানা:</div>
+            <div class="val" id="modalAddress">--</div>
+          </div>
+          <div class="fc-detail-item">
+            <div class="label">মোট ভোটার সংখ্যা:</div>
+            <div class="val" id="modalTotalMembers">--</div>
+          </div>
+          <div class="fc-detail-item">
+            <div class="label">কার্ড স্ট্যাটাস:</div>
+            <div class="val" id="modalCardStatus">--</div>
+          </div>
+        </div>
+
+        <h4 style="font-size: 0.85rem; color: #a7f3d0; margin-bottom: 0.5rem; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 0.6rem;">
+          পরিবারভুক্ত নিবন্ধিত ভোটার সদস্যবৃন্দ:
+        </h4>
+        <table class="specimen-member-table">
+          <thead>
+            <tr>
+              <th>ক্রমিক</th>
+              <th>সদস্যের ভূমিকা</th>
+              <th>ভোটার আইডি নং</th>
+              <th>সদস্যের নাম</th>
+              <th>অভিভাবক</th>
+              <th>মাতার নাম</th>
+              <th>পেশা</th>
+              <th>লিঙ্গ</th>
+              <th>স্ট্যাটাস</th>
+            </tr>
+          </thead>
+          <tbody id="modalMembersTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Modal Bottom Actions -->
+      <div style="display: flex; justify-content: space-between; align-items: center; background: #f8fafc; padding: 1rem 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-light); flex-wrap: wrap; gap: 0.75rem;">
+        <div style="display: flex; gap: 0.75rem; align-items: center;">
+          <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-sub);">স্ট্যাটাস:</span>
+          <select id="modalStatusSelect" style="padding: 0.45rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light); font-size: 0.85rem; font-family: var(--font-bangla);">
+            <option value="মুদ্রিত">মুদ্রিত</option>
+            <option value="বিতরণ সম্পন্ন">বিতরণ সম্পন্ন</option>
+            <option value="যাচাইকরণাধীন">যাচাইকরণাধীন</option>
+          </select>
+          <button class="pill-btn active" style="padding: 0.45rem 1rem;" onclick="saveCardStatus()">সংরক্ষণ</button>
+          <button class="pill-btn" id="modalResolveAllBtn" style="background: #10b981; color: #fff; padding: 0.45rem 1rem;" onclick="resolveCurrentFamilyAll()">
+            ✅ পরিবার অনুমোদন
+          </button>
+        </div>
+
+        <button class="pill-btn" style="background: #ffffff; border: 1px solid var(--border-light); padding: 0.45rem 1rem;" onclick="window.print()">
+          🖨️ কার্ড প্রিন্ট
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PROFILES SWITCHER MODAL -->
+  <div class="modal-overlay" id="adminModal">
+    <div class="modal-window-clean" style="max-width: 460px;">
+      <div class="modal-header-clean">
+        <h3 style="font-size: 1.05rem; font-weight: 700;">অ্যাডমিন নির্বাচন (৪ জন কর্মকর্তা)</h3>
+        <button class="modal-close-btn" onclick="toggleAdminModal(false)">&times;</button>
+      </div>
+      <div id="adminSelectList" style="display: flex; flex-direction: column; gap: 0.65rem;"></div>
+    </div>
+  </div>
+
+  <!-- BENCHMARK MODAL -->
+  <div class="modal-overlay" id="benchmarkModal">
+    <div class="modal-window-clean" style="max-width: 620px;">
+      <div class="modal-header-clean">
+        <h3 style="font-size: 1.1rem; font-weight: 700;">⚡ Super Sonic Speed Benchmark</h3>
+        <button class="modal-close-btn" onclick="closeBenchmarkModal()">&times;</button>
+      </div>
+      <div id="benchmarkModalContent">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          SQLite WAL + MMAP + FTS5 হার্ডওয়্যার-অ্যাক্সিলারেটেড কুয়েরি টেস্ট
+        </p>
+        <button class="pill-btn active" style="width: 100%; padding: 0.65rem;" onclick="runBenchmarkTests()">
+          লাইভ টেস্ট চালান
+        </button>
+        <div id="benchmarkModalResults" style="margin-top: 1.25rem;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
