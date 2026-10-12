@@ -20,6 +20,7 @@ from pydantic import BaseModel
 
 DB_PATH = "voters.db"
 METRICS_PATH = "metrics_cache.json"
+ENG_TO_BN_DIGITS = str.maketrans("0123456789", "০১২৩৪৫৬৭৮৯")
 
 app = FastAPI(
     title="Family Card Voter Management System",
@@ -154,6 +155,7 @@ async def search_voters(
         params.append(family_id)
 
     if ward:
+        ward = ward.translate(ENG_TO_BN_DIGITS)
         conditions.append("ward_no = ?")
         params.append(ward)
 
@@ -256,6 +258,7 @@ async def get_families(
     params = []
 
     if ward:
+        ward = ward.translate(ENG_TO_BN_DIGITS)
         conditions.append("f.ward_no = ?")
         params.append(ward)
 

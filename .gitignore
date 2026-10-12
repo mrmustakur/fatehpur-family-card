@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Large uncompressed database (compressed voters.db.gz is tracked instead)
+voters.db
+database.db
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
